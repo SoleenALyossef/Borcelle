@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
+=======
+import { useState, useEffect } from 'react';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 import { useParams, useNavigate, Link } from 'react-router';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import {
@@ -17,9 +21,31 @@ import ProductDescriptionSection from './ProductDescriptionSection';
 import RelatedAndDiscount from './RelatedAndDiscount';
 import { API_Config } from '../../Config/API-Config';
 import { useCart } from '../../context/CartContext';
+<<<<<<< HEAD
 import '../../../src/index.css';
 
 const MAIN_COLOR = '#fa3455';
+=======
+import { localizedName } from '../../i18n/localizedFields';
+import { useTranslation } from 'react-i18next';
+import '../../../src/index.css';
+
+const MAIN_COLOR = '#fa3455';
+const BASE_URL = API_Config.BASE_URL;
+const SITE_ROOT = API_Config.BASE_URL.replace(/\/api\/?$/, '');
+const resolveProductImage = (value) => {
+  const path = typeof value === 'object' && value ? (value.url || value.path || value.image) : value;
+  if (typeof path !== 'string' || !path) return '';
+  if (/^(https?:)?\/\//.test(path) || path.startsWith('data:')) return path;
+  const clean = path.replace(/^\/+/, '');
+  return clean.startsWith('storage/') ? `${SITE_ROOT}/${clean}` : `${SITE_ROOT}/storage/${clean}`;
+};
+const getProductImages = (item) => {
+  const primary = Array.isArray(item?.image) ? item.image : [item?.image];
+  const secondary = Array.isArray(item?.images) ? item.images : [];
+  return [...primary, ...secondary].map(resolveProductImage).filter(Boolean).filter((value, index, list) => list.indexOf(value) === index);
+};
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -27,15 +53,26 @@ const ProductDetails = () => {
   const navigate = useNavigate();
 
   const { addToCart, savedItems, addToFavorite, removeFromFavorite } = useCart();
+<<<<<<< HEAD
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isSaved, setIsSaved] = useState(false);
+=======
+  const { i18n } = useTranslation();
+
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const isSaved = (savedItems || []).some((fav) => String(fav.product_id || fav.product?.id || fav.id) === String(product?.id));
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
   const [activeImage, setActiveImage] = useState('');
   const [cartLoading, setCartLoading] = useState(false);
   const [related, setRelated] = useState([]);
 
+<<<<<<< HEAD
   const BASE_URL = API_Config?.BASE_URL;
+=======
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
   const getHeaders = () => {
     const token = localStorage.getItem('token');
     return {
@@ -47,8 +84,12 @@ const ProductDetails = () => {
 
   useEffect(() => {
     if (!productId) return;
+<<<<<<< HEAD
     setLoading(true);
 
+=======
+    // Initial state is already loading; fetch directly when the route id changes.
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
     fetch(`${BASE_URL}/product/${productId}`, {
       method: 'GET',
       headers: getHeaders(),
@@ -60,17 +101,23 @@ const ProductDetails = () => {
       .then((result) => {
         const data = result?.data || result;
         setProduct(data);
+<<<<<<< HEAD
         const mainImg =
           data?.image ||
           (data?.images && data?.images[0]) ||
           'https://via.placeholder.com/400';
         setActiveImage(mainImg);
+=======
+        const images = getProductImages(data);
+        setActiveImage(images[0] || 'https://via.placeholder.com/400');
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
       })
       .catch((err) => console.error('Error fetching product:', err))
       .finally(() => setLoading(false));
   }, [productId]);
 
   useEffect(() => {
+<<<<<<< HEAD
     if (!product?.id) return;
     const isFav = (savedItems || []).some(
       (fav) => String(fav.product_id || fav.product?.id || fav.id) === String(product.id)
@@ -79,6 +126,8 @@ const ProductDetails = () => {
   }, [savedItems, product]);
 
   useEffect(() => {
+=======
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
     fetch(`${BASE_URL}/product`, {
       method: 'GET',
       headers: { Accept: 'application/json' },
@@ -111,9 +160,15 @@ const ProductDetails = () => {
     if (!product?.id) return;
 
     if (isSaved) {
+<<<<<<< HEAD
       removeFromFavorite(product.id).then(() => setIsSaved(false));
     } else {
       addToFavorite(product.id, product).then(() => setIsSaved(true));
+=======
+      removeFromFavorite(product.id);
+    } else {
+      addToFavorite(product.id, product);
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
     }
   };
 
@@ -164,10 +219,22 @@ const ProductDetails = () => {
     );
   }
 
+<<<<<<< HEAD
   const imageList =
     product?.images && product.images.length > 0
       ? product.images
       : [product?.image || 'https://via.placeholder.com/400'];
+=======
+  const imageList = getProductImages(product).length
+    ? getProductImages(product)
+    : ['https://via.placeholder.com/400'];
+  const productName = i18n.language === 'ar'
+    ? (product?.ar?.name || product?.name || product?.en?.name || product?.title)
+    : (product?.en?.name || product?.name || product?.title || product?.ar?.name);
+  const productDescription = i18n.language === 'ar'
+    ? (product?.ar?.description || product?.description || product?.en?.description)
+    : (product?.en?.description || product?.description || product?.ar?.description);
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
   const oldPrice = product?.old_price || null;
 
@@ -190,7 +257,11 @@ const ProductDetails = () => {
               >
                 <img
                   src={activeImage}
+<<<<<<< HEAD
                   alt={product?.name}
+=======
+                  alt={productName}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                   style={{ 
                     width: '100%', 
                     height: '100%', 
@@ -233,7 +304,11 @@ const ProductDetails = () => {
               </div>
 
               <h1 className="fs-5 fw-semibold text-dark mb-3" style={{ lineHeight: '1.4' }}>
+<<<<<<< HEAD
                 {product?.name || product?.title}
+=======
+                {productName}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
               </h1>
 
               <div className="d-flex align-items-center gap-2 small text-muted mb-3 flex-wrap">
@@ -364,7 +439,11 @@ const ProductDetails = () => {
         {/* === Description + You may also like === */}
         <Row className="g-4 mt-3">
           <Col lg={9}>
+<<<<<<< HEAD
             <ProductDescriptionSection description={product?.description} />
+=======
+            <ProductDescriptionSection description={productDescription} />
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
           </Col>
 
           <Col lg={3}>
@@ -377,10 +456,17 @@ const ProductDetails = () => {
                       className="border rounded-2 d-flex align-items-center justify-content-center"
                       style={{ width: '56px', height: '56px', backgroundColor: 'var(--bg-secondary)', flexShrink: 0 }}
                     >
+<<<<<<< HEAD
                       <img src={item.image || item.thumbnail} alt={item.name} className="mw-100 mh-100" style={{ objectFit: 'contain' }} />
                     </div>
                     <div className="flex-grow-1">
                       <div className="small text-truncate" style={{ color: 'var(--text-main)' }}>{item.name}</div>
+=======
+                      <img src={item.image || item.thumbnail} alt={localizedName(item, i18n.language, 'Product')} className="mw-100 mh-100" style={{ objectFit: 'contain' }} />
+                    </div>
+                    <div className="flex-grow-1">
+                      <div className="small text-truncate" style={{ color: 'var(--text-main)' }}>{localizedName(item, i18n.language, 'Product')}</div>
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                       <div className="small" style={{ color: '#8b96a5' }}>
                         ${parseFloat(item.price || 0).toFixed(2)}
                       </div>

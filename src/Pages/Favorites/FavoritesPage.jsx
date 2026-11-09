@@ -6,6 +6,11 @@ import { FaHeart, FaStar } from 'react-icons/fa';
 import MainNavbar from '../../components/MainNavbar';
 import Footer from '../../components/Footer';
 import { useCart } from '../../context/CartContext';
+<<<<<<< HEAD
+=======
+import { useTranslation } from 'react-i18next';
+import { localizedName } from '../../i18n/localizedFields';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 const MAIN_COLOR = '#f13b63';
 
@@ -20,6 +25,10 @@ const getImage = (id) => IMAGES[Number(id) % IMAGES.length] || IMAGES[0];
 const FavoritesPage = () => {
   const navigate = useNavigate();
   const { savedItems, favoriteCount, fetchFavorites, removeFromFavorite, addToCart } = useCart();
+<<<<<<< HEAD
+=======
+  const { i18n } = useTranslation();
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -100,7 +109,11 @@ const FavoritesPage = () => {
               const product = fav.product || fav;
               const productId = product.id || fav.product_id || fav.id;
               const price = Number(product.price || 0);
+<<<<<<< HEAD
               const title = product.name || product.title || 'Product';
+=======
+              const title = localizedName(product, i18n.language, 'Product');
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
               return (
                 <Col key={fav.id || productId} xs={12} sm={6} lg={4}>

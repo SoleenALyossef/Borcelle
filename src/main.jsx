@@ -8,6 +8,10 @@ import { AdminAuthProvider } from './context/AdminAuthContext';
 import './i18n/config';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n/config';
+<<<<<<< HEAD
+=======
+import './i18n/domTranslation';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

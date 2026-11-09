@@ -10,10 +10,19 @@ import image from '../../assets/image/Group 1000007742.png';
 import Navbarpayment from './Navbarpayment';
 import { API_Config } from '../../Config/API-Config';
 import { useCart } from '../../context/CartContext';
+<<<<<<< HEAD
+=======
+import { useTranslation } from 'react-i18next';
+import { localizedName, localizedDescription } from '../../i18n/localizedFields';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const { cartItems, fetchCartItems, removeAllItems, fetchOrders } = useCart();
+<<<<<<< HEAD
+=======
+  const { i18n } = useTranslation();
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
   const [selectedPayment, setSelectedPayment] = useState('CASH');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -226,10 +235,17 @@ const CheckoutPage = () => {
                     return (
                       <div key={item.id || product.id} className="cart-item-row">
                         <div className="d-flex align-items-center gap-3 flex-grow-1">
+<<<<<<< HEAD
                           <img src={product.image || product.thumbnail || image} alt={product.name} className="cart-item-img" />
                           <div className="flex-grow-1">
                             <h6 className="mb-1 fw-semibold checkout-item-title">{product.name}</h6>
                             <small className="checkout-item-desc">{product.description || ''}</small>
+=======
+                          <img src={product.image || product.thumbnail || image} alt={localizedName(product, i18n.language, 'Product')} className="cart-item-img" />
+                          <div className="flex-grow-1">
+                            <h6 className="mb-1 fw-semibold checkout-item-title">{localizedName(product, i18n.language, 'Product')}</h6>
+                            <small className="checkout-item-desc">{localizedDescription(product, i18n.language, '')}</small>
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                           </div>
                         </div>
                         <div className="d-flex align-items-center gap-3">

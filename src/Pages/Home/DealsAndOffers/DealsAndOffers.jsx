@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Badge, Spinner } from 'react-bootstrap';
+<<<<<<< HEAD
 import { API_Config } from '../../../Config/API-Config'; 
+=======
+import { API_Config } from '../../../Config/API-Config';
+import { useTranslation } from 'react-i18next'; 
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 const DealsAndOffers = ({ 
   title = "Deals and offers", 
   subtitle = "Hygiene equipments", 
   targetDate 
 }) => {
+<<<<<<< HEAD
+=======
+  const { i18n } = useTranslation();
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -36,12 +45,20 @@ const DealsAndOffers = ({
         console.log("Deals products success:", data);
         
   
+<<<<<<< HEAD
         const items = data?.data || data || [];
         
 
         const apiProducts = items.slice(0, 5).map((item) => ({
           id: item.id,
           title: item.name || item.title,
+=======
+        const root = data?.data ?? data;
+        const items = Array.isArray(root) ? root : (Array.isArray(root?.data) ? root.data : []);
+        const apiProducts = items.slice(0, 5).map((item) => ({
+          id: item.id,
+          title: i18n.language === 'ar' ? (item.ar?.name || item.name || item.en?.name || item.title) : (item.en?.name || item.name || item.ar?.name || item.title),
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
           image: item.image || item.thumbnail,
           discount: item.discount ? `${item.discount}%` : "25%"
         }));
@@ -55,7 +72,11 @@ const DealsAndOffers = ({
       .finally(() => {
         setLoading(false);
       });
+<<<<<<< HEAD
   }, []);
+=======
+  }, [i18n.language]);
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 
   const [endTime] = useState(() => {
@@ -116,7 +137,11 @@ const DealsAndOffers = ({
               </div>
               <div className="bg-dark text-white rounded p-2 flex-fill">
                 <div className="fw-bold fs-6">{formatTime(timeLeft.minutes)}</div>
+<<<<<<< HEAD
                 <small style={{ fontSize: '10px' }}>Min</small>
+=======
+                <small style={{ fontSize: '10px' }}>Minute</small>
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
               </div>
               <div className="bg-dark text-white rounded p-2 flex-fill">
                 <div className="fw-bold fs-6">{formatTime(timeLeft.seconds)}</div>

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
+=======
+import { useEffect, useState, useCallback } from 'react';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 import { FiPlus, FiEdit2, FiTrash2, FiRefreshCw } from 'react-icons/fi';
 import { AdminAPI_Config } from '../../../Config/AdminAPI-Config';
 import { useAdminAuth } from '../../../context/AdminAuthContext';
@@ -10,7 +14,11 @@ const CategoriesList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+<<<<<<< HEAD
   const fetchCategories = () => {
+=======
+  const fetchCategories = useCallback(() => {
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
     setLoading(true);
     setError('');
 
@@ -34,11 +42,22 @@ const CategoriesList = () => {
         setError(err.message);
       })
       .finally(() => setLoading(false));
+<<<<<<< HEAD
   };
 
   useEffect(() => {
     if (adminToken) fetchCategories();
   }, [adminToken]);
+=======
+  }, [adminToken]);
+
+  useEffect(() => {
+    if (adminToken) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      fetchCategories();
+    }
+  }, [adminToken, fetchCategories]);
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
   const handleDelete = (id) => {
     if (!window.confirm('Delete this category?')) return;
@@ -52,6 +71,10 @@ const CategoriesList = () => {
     })
       .then((res) => {
         if (!res.ok) throw new Error('Failed to delete category');
+<<<<<<< HEAD
+=======
+        window.dispatchEvent(new CustomEvent('admin:data-changed', { detail: { type: 'category', action: 'delete' } }));
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
         fetchCategories();
       })
       .catch((err) => alert(err.message));

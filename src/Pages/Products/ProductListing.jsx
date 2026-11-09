@@ -1,12 +1,22 @@
+<<<<<<< HEAD
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router';
 import { Container, Row, Col, Form, Button, Card, ButtonGroup, Spinner, Offcanvas, Collapse } from 'react-bootstrap';
+=======
+import { useState, useEffect, useMemo } from 'react';
+import { Link, useLocation } from 'react-router';
+import { Container, Row, Col, Form, Button, Card, ButtonGroup, Offcanvas, Collapse } from 'react-bootstrap';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 import { FiChevronUp, FiChevronDown, FiHeart, FiGrid, FiList, FiChevronLeft, FiChevronRight, FiSearch, FiFilter } from 'react-icons/fi';
 import { FaStar } from 'react-icons/fa';
 import MainNavbar from '../../components/MainNavbar';
 import Footer from '../../components/Footer';
 import { API_Config } from '../../Config/API-Config';
 import { useCart } from '../../context/CartContext';
+<<<<<<< HEAD
+=======
+import { useTranslation } from 'react-i18next';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 const MAIN_COLOR = '#f13b63';
 const ITEMS_PER_PAGE = 15;
@@ -49,6 +59,7 @@ const SORT_OPTIONS = {
   'price-asc': { label: 'Price: Low to High',  order_by: 'price',      order: 'asc' },
   'price-desc':{ label: 'Price: High to Low',  order_by: 'price',      order: 'desc' },
   newest:      { label: 'Newest first',        order_by: 'created_at', order: 'desc' },
+<<<<<<< HEAD
   best:        { label: 'Best selling',        order_by: 'most_purchased', order: 'desc' },
 };
 
@@ -59,6 +70,12 @@ const PRICE_OPTIONS = [
   { value: '500-1000',  label: '$500 - $1000',    min: 500,  max: 1000 },
   { value: '1000-',     label: 'Over $1000',      min: 1000 },
 ];
+=======
+  oldest:      { label: 'Oldest first',        order_by: 'created_at', order: 'asc' },
+};
+
+
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 const RenderStars = () => (
   <div className="d-inline-flex gap-1" style={{ color: '#ff9017', fontSize: '0.85rem' }}>
@@ -306,6 +323,10 @@ const CollapsibleFilterGroup = ({ title, items, selected, onToggle, type = 'chec
 };
 
 const ProductListing = () => {
+<<<<<<< HEAD
+=======
+  const location = useLocation();
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -315,6 +336,7 @@ const ProductListing = () => {
   const [serverTotal, setServerTotal] = useState(null);
 
   const [viewMode, setViewMode] = useState('list');
+<<<<<<< HEAD
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -327,11 +349,44 @@ const ProductListing = () => {
   const [priceRange, setPriceRange] = useState('');
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [sortBy, setSortBy] = useState('featured');
+=======
+  const initialQuery = new URLSearchParams(location.search);
+  const [searchTerm, setSearchTerm] = useState(() => initialQuery.get('search') || '');
+  const [debouncedSearch, setDebouncedSearch] = useState(() => initialQuery.get('search') || '');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showMobileFilter, setShowMobileFilter] = useState(false);
+
+  const [selectedCategory, setSelectedCategory] = useState(() => new URLSearchParams(location.search).get('category_id') || null);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
+  const [selectedCondition, setSelectedCondition] = useState('Any');
+  const [priceFrom, setPriceFrom] = useState('');
+  const [priceTo, setPriceTo] = useState('');
+  const { i18n } = useTranslation();
+  const [verifiedOnly, setVerifiedOnly] = useState(false);
+  const [sortBy, setSortBy] = useState('featured');
+  const hasClientFilters = selectedBrands.length > 0 || selectedFeatures.length > 0 || selectedCondition !== 'Any' || verifiedOnly;
+  const pageToFetch = hasClientFilters ? 1 : currentPage;
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
   const [categoryOpen, setCategoryOpen] = useState(true);
   const [priceOpen, setPriceOpen] = useState(true);
 
   useEffect(() => {
+<<<<<<< HEAD
+=======
+    const query = new URLSearchParams(location.search);
+    const queryCategory = query.get('category_id') || null;
+    const querySearch = query.get('search') || '';
+    // Route query parameters can change without remounting ProductListing.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSelectedCategory(queryCategory);
+    setSearchTerm(querySearch);
+    setDebouncedSearch(querySearch);
+  }, [location.search]);
+
+  useEffect(() => {
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
     const categoryUrl = `${API_Config.BASE_URL}/${API_Config.ENDPOINTS.CATEGORY}`;
     fetch(categoryUrl, {
       method: "GET",
@@ -342,7 +397,12 @@ const ProductListing = () => {
         return response.json();
       })
       .then(data => {
+<<<<<<< HEAD
         const list = data.data || data;
+=======
+        const root = data?.data ?? data;
+        const list = Array.isArray(root) ? root : (root?.data || []);
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
         setCategories(Array.isArray(list) ? list : []);
       })
       .catch(err => console.error("Error fetching categories:", err));
@@ -360,20 +420,33 @@ const ProductListing = () => {
     if (selectedCategory !== null) params.append('category_id', selectedCategory);
     if (debouncedSearch.trim()) params.append('search', debouncedSearch.trim());
 
+<<<<<<< HEAD
     const price = PRICE_OPTIONS.find(p => p.value === priceRange);
     if (price && price.min !== undefined) params.append('price_from', price.min);
     if (price && price.max !== undefined) params.append('price_to', price.max);
+=======
+    if (priceFrom !== '' && Number.isFinite(Number(priceFrom))) params.append('price_from', priceFrom);
+    if (priceTo !== '' && Number.isFinite(Number(priceTo))) params.append('price_to', priceTo);
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
     const sort = SORT_OPTIONS[sortBy];
     if (sort?.order_by) {
       params.append('order_by', sort.order_by);
       params.append('order', sort.order);
     }
+<<<<<<< HEAD
     params.append('page', currentPage);
+=======
+    params.append('page', pageToFetch);
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
     const query = params.toString();
     const url = `${API_Config.BASE_URL}/${API_Config.ENDPOINTS.PRODUCT}${query ? `?${query}` : ''}`;
 
+<<<<<<< HEAD
+=======
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
     setLoading(true);
     setError(null);
 
@@ -386,6 +459,7 @@ const ProductListing = () => {
         if (!response.ok) throw new Error("حدث خطأ في جلب المنتجات");
         return response.json();
       })
+<<<<<<< HEAD
       .then(data => {
         const root = data?.data ?? data;
         const isArr = Array.isArray(root);
@@ -399,10 +473,48 @@ const ProductListing = () => {
         const total = Number(meta?.total);
         setServerLastPage(lastPage > 0 ? lastPage : null);
         setServerTotal(total >= 0 && meta?.total !== undefined ? total : null);
+=======
+      .then(async (data) => {
+        const readPage = (payload) => {
+          const root = payload?.data ?? payload;
+          const isArray = Array.isArray(root);
+          const items = isArray ? root : root?.data;
+          const meta = isArray ? (payload?.meta || payload) : (root?.meta || root);
+          return {
+            items: Array.isArray(items) ? items : [],
+            lastPage: Number(meta?.last_page ?? payload?.meta?.last_page ?? 0),
+            total: meta?.total ?? payload?.meta?.total,
+          };
+        };
+        const firstPage = readPage(data);
+        let productsArray = firstPage.items;
+        // Brand/features/condition/shipping have no documented API parameters in this backend.
+        // When any are selected, fetch all matching server-side pages so local filters are accurate.
+        if (hasClientFilters && firstPage.lastPage > 1) {
+          const remainingPages = await Promise.all(Array.from({ length: firstPage.lastPage - 1 }, async (_, index) => {
+            const pageParams = new URLSearchParams(params);
+            pageParams.set('page', String(index + 2));
+            const pageResponse = await fetch(`${API_Config.BASE_URL}/${API_Config.ENDPOINTS.PRODUCT}?${pageParams.toString()}`, {
+              method: 'GET',
+              headers: { Accept: 'application/json' },
+              signal: controller.signal,
+            });
+            if (!pageResponse.ok) throw new Error('حدث خطأ في جلب المنتجات');
+            const pagePayload = await pageResponse.json();
+            return readPage(pagePayload).items;
+          }));
+          productsArray = firstPage.items.concat(...remainingPages);
+        }
+
+        const uniqueProducts = productsArray.filter((v, i, a) => a.findIndex(t => String(t.id) === String(v.id)) === i);
+        setServerLastPage(hasClientFilters ? null : (firstPage.lastPage > 0 ? firstPage.lastPage : null));
+        setServerTotal(firstPage.total !== undefined && firstPage.total !== null && Number.isFinite(Number(firstPage.total)) ? Number(firstPage.total) : null);
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
         const formattedProducts = uniqueProducts.map((item) => ({
           ...item,
           id: item.id,
+<<<<<<< HEAD
           title: item.name,
           price: Math.round(Number(item.price)) || 0,
           description: item.description,
@@ -410,6 +522,15 @@ const ProductListing = () => {
           categoryId: item.category_id || (item.category && item.category.id),
           freeShipping: Boolean(item.free_shipping || item.is_free_shipping || item.freeShipping),
           brand: item.brand || null,
+=======
+          title: i18n.language === 'ar' ? (item.ar?.name || item.name || item.en?.name) : (item.en?.name || item.name || item.ar?.name),
+          price: Number(item.price) || 0,
+          description: i18n.language === 'ar' ? (item.ar?.description || item.description || item.en?.description) : (item.en?.description || item.description || item.ar?.description),
+          imageSources: getImageCandidates(item.image ?? item.avatar ?? item.images),
+          categoryId: item.category_id || (item.category && item.category.id),
+          freeShipping: Boolean(item.free_shipping || item.is_free_shipping || item.freeShipping),
+          brand: typeof item.brand === 'string' ? item.brand : (item.brand?.name || item.brand?.title || null),
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
           features: item.features || [],
           condition: item.condition || 'Any'
         }));
@@ -427,11 +548,20 @@ const ProductListing = () => {
       });
 
     return () => controller.abort();
+<<<<<<< HEAD
   }, [selectedCategory, debouncedSearch, priceRange, sortBy, reloadKey, currentPage]);
 
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedCategory, selectedBrands, selectedFeatures, selectedCondition, priceRange, verifiedOnly, sortBy, debouncedSearch]);
+=======
+  }, [selectedCategory, debouncedSearch, priceFrom, priceTo, sortBy, reloadKey, pageToFetch, hasClientFilters, i18n.language]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCurrentPage(1);
+  }, [selectedCategory, selectedBrands, selectedFeatures, selectedCondition, priceFrom, priceTo, verifiedOnly, sortBy, debouncedSearch]);
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -443,6 +573,7 @@ const ProductListing = () => {
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
+<<<<<<< HEAD
       if (selectedBrands.length > 0 && product.brand && !selectedBrands.includes(product.brand)) return false;
       if (selectedFeatures.length > 0 && Array.isArray(product.features) && product.features.length > 0 && !product.features.some(f => selectedFeatures.includes(f))) return false;
       if (selectedCondition !== 'Any' && product.condition !== 'Any' && product.condition !== selectedCondition) return false;
@@ -450,6 +581,22 @@ const ProductListing = () => {
       return true;
     });
   }, [products, selectedBrands, selectedFeatures, selectedCondition, verifiedOnly]);
+=======
+      if (selectedBrands.length > 0 && !selectedBrands.includes(product.brand)) return false;
+      if (selectedFeatures.length > 0 && !(Array.isArray(product.features) && product.features.some(f => selectedFeatures.includes(typeof f === 'string' ? f : f?.name)))) return false;
+      if (selectedCondition !== 'Any' && product.condition !== selectedCondition) return false;
+      if (priceFrom !== '' && Number(product.price) < Number(priceFrom)) return false;
+      if (priceTo !== '' && Number(product.price) > Number(priceTo)) return false;
+      if (debouncedSearch.trim()) {
+        const haystack = `${product.title || ''} ${product.description || ''}`.toLocaleLowerCase();
+        if (!haystack.includes(debouncedSearch.trim().toLocaleLowerCase())) return false;
+      }
+      if (selectedCategory !== null && String(product.categoryId) !== String(selectedCategory)) return false;
+      if (verifiedOnly && !product.freeShipping) return false;
+      return true;
+    });
+  }, [products, selectedBrands, selectedFeatures, selectedCondition, priceFrom, priceTo, debouncedSearch, selectedCategory, verifiedOnly]);
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
   const totalPages = serverLastPage ?? Math.max(1, Math.ceil(filteredProducts.length / ITEMS_PER_PAGE));
   const currentProducts = useMemo(() => {
@@ -461,7 +608,10 @@ const ProductListing = () => {
   const pageStart = Math.max(1, Math.min(currentPage - 2, totalPages - 4));
   const pageNumbers = Array.from({ length: Math.min(5, totalPages) }, (_, i) => pageStart + i);
 
+<<<<<<< HEAD
   const hasClientFilters = selectedBrands.length > 0 || selectedFeatures.length > 0 || selectedCondition !== 'Any' || verifiedOnly;
+=======
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
   const itemsCount = serverTotal !== null && !hasClientFilters ? serverTotal : filteredProducts.length;
 
   const resetFilters = () => {
@@ -469,7 +619,12 @@ const ProductListing = () => {
     setSelectedBrands([]);
     setSelectedFeatures([]);
     setSelectedCondition('Any');
+<<<<<<< HEAD
     setPriceRange('');
+=======
+    setPriceFrom('');
+    setPriceTo('');
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
     setVerifiedOnly(false);
     setSearchTerm('');
     setDebouncedSearch('');
@@ -502,13 +657,18 @@ const ProductListing = () => {
                 style={{ cursor: 'pointer', color: selectedCategory === cat.id ? MAIN_COLOR : 'inherit' }}
                 onClick={() => setSelectedCategory(cat.id)}
               >
+<<<<<<< HEAD
                 {cat.name}
+=======
+                {i18n.language === 'ar' ? (cat.ar?.name || cat.name || cat.en?.name) : (cat.en?.name || cat.name || cat.ar?.name)}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
               </li>
             ))}
           </ul>
         </Collapse>
       </div>
 
+<<<<<<< HEAD
       <CollapsibleFilterGroup
         title="Brands"
         items={['Samsung', 'Apple', 'Huawei', 'Pocco', 'Lenovo']}
@@ -522,6 +682,25 @@ const ProductListing = () => {
         selected={selectedFeatures}
         onToggle={(f) => toggleSelection(f, setSelectedFeatures)}
       />
+=======
+      {Array.from(new Set(products.map((p) => typeof p.brand === 'string' ? p.brand : p.brand?.name).filter(Boolean))).length > 0 && (
+        <CollapsibleFilterGroup
+          title="Brands"
+          items={Array.from(new Set(products.map((p) => typeof p.brand === 'string' ? p.brand : p.brand?.name).filter(Boolean)))}
+          selected={selectedBrands}
+          onToggle={(b) => toggleSelection(b, setSelectedBrands)}
+        />
+      )}
+
+      {Array.from(new Set(products.flatMap((p) => Array.isArray(p.features) ? p.features.map((f) => typeof f === 'string' ? f : f?.name).filter(Boolean) : []))).length > 0 && (
+        <CollapsibleFilterGroup
+          title="Features"
+          items={Array.from(new Set(products.flatMap((p) => Array.isArray(p.features) ? p.features.map((f) => typeof f === 'string' ? f : f?.name).filter(Boolean) : [])))}
+          selected={selectedFeatures}
+          onToggle={(f) => toggleSelection(f, setSelectedFeatures)}
+        />
+      )}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
       <div className="p-3 border-bottom">
         <div
@@ -534,6 +713,7 @@ const ProductListing = () => {
         </div>
         <Collapse in={priceOpen}>
           <div>
+<<<<<<< HEAD
             <Form.Select
               size="sm"
               className="pl-input"
@@ -544,10 +724,31 @@ const ProductListing = () => {
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
               ))}
             </Form.Select>
+=======
+            <Row className="g-2">
+              <Col xs={6}>
+                <Form.Label className="small text-muted mb-1">From</Form.Label>
+                <Form.Control
+                  type="number" min="0" size="sm" className="pl-input"
+                  aria-label="Minimum price" placeholder="Min"
+                  value={priceFrom} onChange={(e) => setPriceFrom(e.target.value)}
+                />
+              </Col>
+              <Col xs={6}>
+                <Form.Label className="small text-muted mb-1">To</Form.Label>
+                <Form.Control
+                  type="number" min="0" size="sm" className="pl-input"
+                  aria-label="Maximum price" placeholder="Max"
+                  value={priceTo} onChange={(e) => setPriceTo(e.target.value)}
+                />
+              </Col>
+            </Row>
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
           </div>
         </Collapse>
       </div>
 
+<<<<<<< HEAD
       <CollapsibleFilterGroup
         title="Condition"
         items={['Any', 'Refurbished', 'Brand new', 'Old items']}
@@ -555,6 +756,17 @@ const ProductListing = () => {
         selected={selectedCondition}
         onToggle={setSelectedCondition}
       />
+=======
+      {Array.from(new Set(products.map((p) => p.condition).filter((value) => value && value !== 'Any'))).length > 0 && (
+        <CollapsibleFilterGroup
+          title="Condition"
+          items={['Any', ...Array.from(new Set(products.map((p) => p.condition).filter((value) => value && value !== 'Any')))]}
+          type="radio"
+          selected={selectedCondition}
+          onToggle={setSelectedCondition}
+        />
+      )}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
       <div className="p-3 text-center">
         <Button

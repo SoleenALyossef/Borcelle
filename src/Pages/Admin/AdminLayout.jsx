@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
+=======
+import { useState } from 'react';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 import { Outlet, NavLink, useNavigate } from 'react-router';
 import {
   FiHome,
@@ -13,10 +17,20 @@ import {
   FiMoon,
   FiSun,
   FiUser,
+<<<<<<< HEAD
 } from 'react-icons/fi';
 import { useAdminAuth } from '../../context/AdminAuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import './AdminLayout.css';
+=======
+  FiGlobe,
+} from 'react-icons/fi';
+import { useAdminAuth } from '../../context/AdminAuthContext';
+import { useTheme } from '../../context/ThemeContext';
+import { useTranslation } from 'react-i18next';
+import './AdminLayout.css';
+import logoimg from '../../assets/image/Black and Red Online Store Logo 1.png';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 const NAV_ITEMS = [
   { to: '/admin', label: 'Dashboard', icon: <FiHome />, end: true },
@@ -31,8 +45,14 @@ const NAV_ITEMS = [
 const AdminLayout = () => {
   const { adminUser, logout } = useAdminAuth();
   const { theme, toggleTheme } = useTheme();
+<<<<<<< HEAD
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+=======
+  const { i18n } = useTranslation();
+  const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches);
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
   const handleLogout = () => {
     logout();
@@ -43,10 +63,17 @@ const AdminLayout = () => {
     <div className={`admin-layout ${collapsed ? 'collapsed' : ''}`}>
       {/* Sidebar */}
       <aside className="admin-sidebar">
+<<<<<<< HEAD
         <div className="admin-brand">
           <span className="dot" />
           {!collapsed && <span>Borcelle Admin</span>}
         </div>
+=======
+        <NavLink to="/" className="admin-brand admin-brand-link" title={i18n.language === 'ar' ? 'العودة إلى المتجر' : 'Back to the storefront'}>
+          <img src={logoimg} alt="Borcelle" />
+          {!collapsed && <span>{i18n.language === 'ar' ? 'بورسيل' : 'Borcelle'}</span>}
+        </NavLink>
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
         <nav className="admin-nav">
           {NAV_ITEMS.map((item) => (
@@ -76,6 +103,12 @@ const AdminLayout = () => {
           </button>
 
           <div className="admin-topbar-right">
+<<<<<<< HEAD
+=======
+            <button className="admin-icon-btn" onClick={() => i18n.changeLanguage(i18n.language === 'ar' ? 'en' : 'ar')} title={i18n.language === 'ar' ? 'English' : 'العربية'} aria-label="Toggle language">
+              <FiGlobe />
+            </button>
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
             <button className="admin-icon-btn" onClick={toggleTheme} title="Toggle theme">
               {theme === 'dark' ? <FiSun /> : <FiMoon />}
             </button>

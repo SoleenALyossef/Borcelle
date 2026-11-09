@@ -1,5 +1,9 @@
 import AuthLayout from "../../components/AuthLayout";
+<<<<<<< HEAD
 import React, { useState, useRef, useEffect } from 'react';
+=======
+import { useState, useRef, useEffect } from 'react';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router";
 import { API_Config } from '../../Config/API-Config';
@@ -150,6 +154,10 @@ const Verification = () => {
         const token = data?.data?.token;
         if (token) {
           localStorage.setItem('token', token);
+<<<<<<< HEAD
+=======
+          window.dispatchEvent(new Event('customer-auth-changed'));
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
         }
 
         //  نتحقق من المستخدم

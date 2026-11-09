@@ -2,9 +2,18 @@ import React, { useState } from 'react';
 import { FiShield, FiMessageSquare, FiTruck, FiShoppingCart } from 'react-icons/fi';
 import { FaCcVisa, FaCcMastercard, FaPaypal, FaApplePay, FaCcAmex } from 'react-icons/fa';
 import './CartAndSaved.css';
+<<<<<<< HEAD
 
 // 1. Cart Items Component
 export const CartItemsList = ({ items, onUpdateQty, onRemove, onSaveForLater, onBackToShop, onRemoveAll }) => {
+=======
+import { useTranslation } from 'react-i18next';
+import { localizedName } from '../../i18n/localizedFields';
+
+// 1. Cart Items Component
+export const CartItemsList = ({ items, onUpdateQty, onRemove, onSaveForLater, onBackToShop, onRemoveAll }) => {
+  const { i18n } = useTranslation();
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
   return (
     <div className="cart-items-section">
       {items.map((item) => {
@@ -17,10 +26,17 @@ export const CartItemsList = ({ items, onUpdateQty, onRemove, onSaveForLater, on
           <div className="cart-item-row" key={item.id}>
             <div className="item-info-group">
               <div className="item-img-box">
+<<<<<<< HEAD
                 <img src={imageUrl || 'https://via.placeholder.com/150'} alt={product.name || item.title} />
               </div>
               <div className="item-details">
                 <h4 className="item-title">{product.name || item.title || 'Product'}</h4>
+=======
+                <img src={imageUrl || 'https://via.placeholder.com/150'} alt={localizedName(product, i18n.language, item.title || 'Product')} />
+              </div>
+              <div className="item-details">
+                <h4 className="item-title">{localizedName(product, i18n.language, item.title || 'Product')}</h4>
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                 <p className="item-specs">
                   Size: {item.size || 'Medium'}, Color: {item.color || 'Blue'}, Material: {item.material || 'Plastic'}
                 </p>
@@ -151,6 +167,10 @@ export const FeaturesBanner = () => {
 
 // 4. Saved For Later 
 export const SavedForLater = ({ savedItems, onMoveToCart }) => {
+<<<<<<< HEAD
+=======
+  const { i18n } = useTranslation();
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
   if (!savedItems || savedItems.length === 0) return null;
 
   return (
@@ -164,7 +184,11 @@ export const SavedForLater = ({ savedItems, onMoveToCart }) => {
         
           const imageUrl = product.image || item.image || 'https://via.placeholder.com/150';
         
+<<<<<<< HEAD
           const title = product.name || item.title || 'Product';
+=======
+          const title = localizedName(product, i18n.language, item.title || 'Product');
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
           return (
             <div className="saved-product-card" key={item.id || item.product_id}>

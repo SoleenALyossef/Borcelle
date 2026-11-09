@@ -2,11 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { API_Config } from '../../Config/API-Config';
+<<<<<<< HEAD
+=======
+import { useTranslation } from 'react-i18next';
+import { localizedName } from '../../i18n/localizedFields';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 const RelatedAndDiscount = ({ currentProductId }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+<<<<<<< HEAD
+=======
+  const { i18n } = useTranslation();
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
   const BASE_URL = API_Config?.BASE_URL;
 
@@ -61,7 +70,11 @@ const RelatedAndDiscount = ({ currentProductId }) => {
                   >
                     <img
                       src={item.image || item.thumbnail || 'https://via.placeholder.com/150'}
+<<<<<<< HEAD
                       alt={item.name}
+=======
+                      alt={localizedName(item, i18n.language, 'Product')}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                       style={{
                         width: '100%',
                         height: '100%',
@@ -75,7 +88,11 @@ const RelatedAndDiscount = ({ currentProductId }) => {
                       className="fw-normal text-dark mb-1 text-truncate"
                       style={{ fontSize: '0.85rem', lineHeight: '1.3' }}
                     >
+<<<<<<< HEAD
                       {item.name}
+=======
+                      {localizedName(item, i18n.language, 'Product')}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                     </h4>
                     <span style={{ fontSize: '0.85rem', color: '#8b96a5' }}>
                       ${parseFloat(item.price || 0).toFixed(2)}

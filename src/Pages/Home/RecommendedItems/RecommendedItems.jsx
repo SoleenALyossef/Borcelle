@@ -4,6 +4,10 @@ import { API_Config } from '../../../Config/API-Config';
 import CartModal from '../CartModal';
 import { useCart } from '../../../context/CartContext';
 import { useNavigate } from 'react-router';
+<<<<<<< HEAD
+=======
+import { useTranslation } from 'react-i18next';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 const RecommendedItems = ({ title = 'Recommended items' }) => {
   const [products, setProducts] = useState([]);
@@ -15,6 +19,10 @@ const RecommendedItems = ({ title = 'Recommended items' }) => {
 
   const navigate = useNavigate();
   const { addToCart } = useCart();
+<<<<<<< HEAD
+=======
+  const { i18n } = useTranslation();
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
   useEffect(() => {
     setLoading(true);
@@ -68,7 +76,11 @@ const RecommendedItems = ({ title = 'Recommended items' }) => {
                     <Card.Img
                       variant="top"
                       src={item.image || item.thumbnail || 'https://via.placeholder.com/150'}
+<<<<<<< HEAD
                       alt={item.name}
+=======
+                      alt={i18n.language === 'ar' ? (item.ar?.name || item.name || item.en?.name) : (item.en?.name || item.name || item.ar?.name)}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                       style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', transition: 'transform 0.3s', transform: hoveredIndex === index ? 'scale(1.05)' : 'scale(1)' }}
                     />
                   </div>
@@ -77,7 +89,11 @@ const RecommendedItems = ({ title = 'Recommended items' }) => {
                       ${parseFloat(item.price || 0).toFixed(2)}
                     </div>
                     <p className="small mb-0 text-truncate" style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+<<<<<<< HEAD
                       {item.name || item.title}
+=======
+                      {i18n.language === 'ar' ? (item.ar?.name || item.name || item.en?.name || item.title) : (item.en?.name || item.name || item.ar?.name || item.title)}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                     </p>
                   </Card.Body>
                   

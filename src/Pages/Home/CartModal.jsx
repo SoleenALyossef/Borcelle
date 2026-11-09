@@ -3,9 +3,18 @@ import { Offcanvas, Button, Spinner } from 'react-bootstrap';
 import { FaTrashAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
 import { useCart } from '../../context/CartContext';
+<<<<<<< HEAD
 
 const CartModal = ({ show, handleClose }) => {
   const navigate = useNavigate();
+=======
+import { useTranslation } from 'react-i18next';
+import { localizedName } from '../../i18n/localizedFields';
+
+const CartModal = ({ show, handleClose }) => {
+  const navigate = useNavigate();
+  const { i18n } = useTranslation();
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
   const {
     cartItems,
     loading,
@@ -80,7 +89,11 @@ const CartModal = ({ show, handleClose }) => {
                   <div className="position-relative me-3">
                     <img
                       src={product.image || product.thumbnail}
+<<<<<<< HEAD
                       alt={product.name}
+=======
+                      alt={localizedName(product, i18n.language, 'Product')}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                       style={{
                         width: '80px',
                         height: '80px',
@@ -108,7 +121,11 @@ const CartModal = ({ show, handleClose }) => {
 
                   <div className="flex-grow-1">
                     <h6 className="fw-bold mb-1 text-dark" style={{ fontSize: '0.95rem' }}>
+<<<<<<< HEAD
                       {product.name}
+=======
+                      {localizedName(product, i18n.language, 'Product')}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                     </h6>
                     <div className="d-flex align-items-center gap-2 mt-2">
                       <div className="d-flex align-items-center border rounded px-2 py-1 bg-light">

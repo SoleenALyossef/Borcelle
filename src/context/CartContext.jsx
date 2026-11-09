@@ -40,6 +40,7 @@ export const CartProvider = ({ children }) => {
 
   // ==================== Guest Helpers ====================
   const loadGuestCart = () => {
+<<<<<<< HEAD
     try { return JSON.parse(localStorage.getItem('guestCart') || '[]'); }
     catch { return []; }
   };
@@ -50,6 +51,18 @@ export const CartProvider = ({ children }) => {
     catch { return []; }
   };
   const saveGuestFavorites = (items) => localStorage.setItem('guestFavorites', JSON.stringify(items));
+=======
+    try { return JSON.parse(sessionStorage.getItem('guestCart') || '[]'); }
+    catch { return []; }
+  };
+  const saveGuestCart = (items) => sessionStorage.setItem('guestCart', JSON.stringify(items));
+
+  const loadGuestFavorites = () => {
+    try { return JSON.parse(sessionStorage.getItem('guestFavorites') || '[]'); }
+    catch { return []; }
+  };
+  const saveGuestFavorites = (items) => sessionStorage.setItem('guestFavorites', JSON.stringify(items));
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
   // ==================== Fetch Cart ====================
   const fetchCartItems = useCallback((isSilent = false) => {

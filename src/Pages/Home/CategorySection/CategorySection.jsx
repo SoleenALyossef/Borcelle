@@ -3,6 +3,10 @@ import { Card, Row, Col, Button, Spinner } from 'react-bootstrap';
 import { API_Config } from '../../../Config/API-Config';
 import CartModal from '../CartModal';
 import { useCart } from '../../../context/CartContext';
+<<<<<<< HEAD
+=======
+import { useTranslation } from 'react-i18next';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 const CategorySection = ({ bannerTitle, bannerImage, category }) => {
   const [products, setProducts] = useState([]);
@@ -12,6 +16,10 @@ const CategorySection = ({ bannerTitle, bannerImage, category }) => {
   const [addingId, setAddingId] = useState(null);
 
   const { addToCart } = useCart();
+<<<<<<< HEAD
+=======
+  const { i18n } = useTranslation();
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
   useEffect(() => {
     let url = `${API_Config.BASE_URL}/${API_Config.ENDPOINTS.PRODUCT}`;
@@ -114,7 +122,13 @@ const CategorySection = ({ bannerTitle, bannerImage, category }) => {
                 <Row className="row-cols-2 row-cols-md-4 g-0 h-100">
                   {products.map((product, index) => {
                     const productId = product.id || product._id;
+<<<<<<< HEAD
                     const productName = product.name || product.title;
+=======
+                    const productName = i18n.language === 'ar'
+                      ? (product.ar?.name || product.name || product.en?.name || product.title)
+                      : (product.en?.name || product.name || product.ar?.name || product.title);
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                     const productPrice =
                       typeof product.price === 'number'
                         ? `$${product.price.toFixed(2)}`

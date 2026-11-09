@@ -95,8 +95,13 @@ const ProfileInfoPage = () => {
         console.log('Register success:', data);
 
         const userData = data?.data || {};
+<<<<<<< HEAD
         localStorage.setItem('userName', userData.name || registerData.name);
         localStorage.setItem('userEmail', userData.email || registerData.email);
+=======
+        localStorage.setItem('userName', registerData.name.trim() || userData.name || '');
+        localStorage.setItem('userEmail', registerData.email.trim() || userData.email || '');
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
         const imageUrl = userData.image || data?.image;
         if (imageUrl) {
@@ -124,8 +129,13 @@ const ProfileInfoPage = () => {
           console.log('User already exists → skipping');
 
           // نحفظ معلوماته على أي حال
+<<<<<<< HEAD
           localStorage.setItem('userName', registerData.name || 'User');
           localStorage.setItem('userEmail', registerData.email || '');
+=======
+          localStorage.setItem('userName', registerData.name.trim());
+          localStorage.setItem('userEmail', registerData.email.trim());
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
           if (registerData.imagePreview) {
             localStorage.setItem('userImage', registerData.imagePreview);
           }

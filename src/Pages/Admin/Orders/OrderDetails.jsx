@@ -3,11 +3,20 @@ import { useParams, useNavigate } from 'react-router';
 import { FiArrowLeft, FiPackage, FiMapPin, FiCreditCard, FiCalendar } from 'react-icons/fi';
 import { AdminAPI_Config } from '../../../Config/AdminAPI-Config';
 import { useAdminAuth } from '../../../context/AdminAuthContext';
+<<<<<<< HEAD
+=======
+import { useTranslation } from 'react-i18next';
+import { localizedName } from '../../../i18n/localizedFields';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 const OrderDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { adminToken } = useAdminAuth();
+<<<<<<< HEAD
+=======
+  const { i18n } = useTranslation();
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -120,11 +129,19 @@ const OrderDetails = () => {
                     <td>
                       <img
                         src={product.image || 'https://via.placeholder.com/40'}
+<<<<<<< HEAD
                         alt={product.name}
                         style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px' }}
                       />
                     </td>
                     <td>{product.name || product.title || 'Product'}</td>
+=======
+                        alt={localizedName(product, i18n.language, 'Product')}
+                        style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px' }}
+                      />
+                    </td>
+                    <td>{localizedName(product, i18n.language, 'Product')}</td>
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                     <td>{qty}</td>
                     <td>{price.toFixed(2)} AED</td>
                     <td>{(price * qty).toFixed(2)} AED</td>

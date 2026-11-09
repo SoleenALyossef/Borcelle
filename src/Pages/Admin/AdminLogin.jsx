@@ -1,13 +1,27 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { useNavigate } from 'react-router';
 import { useAdminAuth } from '../../context/AdminAuthContext';
 import AuthLayout from '../../components/AuthLayout';
+=======
+import { useState } from 'react';
+import { Form, Button, InputGroup } from 'react-bootstrap';
+import { FiMail, FiLock, FiGlobe } from 'react-icons/fi';
+import { useNavigate } from 'react-router';
+import { useAdminAuth } from '../../context/AdminAuthContext';
+import AuthLayout from '../../components/AuthLayout';
+import { useTranslation } from 'react-i18next';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 const AdminLogin = () => {
   const navigate = useNavigate();
   const { login } = useAdminAuth();
+<<<<<<< HEAD
+=======
+  const { i18n } = useTranslation();
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 
   const [email, setEmail] = useState('admin@candy.com');
@@ -30,6 +44,10 @@ const AdminLogin = () => {
 
   return (
     <AuthLayout>
+<<<<<<< HEAD
+=======
+      <div className="d-flex justify-content-end mb-3"><button type="button" className="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2" onClick={() => i18n.changeLanguage(i18n.language === 'ar' ? 'en' : 'ar')}><FiGlobe /> {i18n.language === 'ar' ? 'English' : 'العربية'}</button></div>
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
       <h3 className="form-title">Admin Login</h3>
       <p className="form-subtitle">Sign in to your dashboard</p>
 

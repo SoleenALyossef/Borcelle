@@ -1,12 +1,27 @@
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { FiPhoneCall } from 'react-icons/fi';
 import AuthLayout from '../../components/AuthLayout';
+<<<<<<< HEAD
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+=======
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 import { API_Config } from '../../Config/API-Config';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+<<<<<<< HEAD
+=======
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.requiresAuth && location.state.from && location.state.from !== '/LoginPage') {
+      localStorage.setItem('redirectAfterLogin', location.state.from);
+    }
+  }, [location.state]);
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
   const [registerData, setRegisterData] = useState({
     field_mobile: { value: '' },
@@ -17,6 +32,7 @@ const LoginPage = () => {
 
   //  نقل السلة المحلية إلى الـ API
   const transferGuestCartToServer = () => {
+<<<<<<< HEAD
     const raw = localStorage.getItem('guestCart');
     if (!raw) return Promise.resolve();
 
@@ -26,6 +42,18 @@ const LoginPage = () => {
     } catch {
       return Promise.resolve();
     }
+=======
+    const raw = sessionStorage.getItem('guestCart');
+    if (!raw) return Promise.resolve();
+
+    let parsedItems;
+    try {
+      parsedItems = JSON.parse(raw);
+    } catch {
+      return Promise.resolve();
+    }
+    const guestItems = Array.isArray(parsedItems) ? parsedItems : [];
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
     if (!guestItems.length) return Promise.resolve();
 
     const token = localStorage.getItem('token');
@@ -48,7 +76,11 @@ const LoginPage = () => {
 
     return Promise.all(promises)
       .then(() => {
+<<<<<<< HEAD
         localStorage.removeItem('guestCart');
+=======
+        sessionStorage.removeItem('guestCart');
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
         console.log('Guest cart transferred ');
       })
       .catch((err) => console.error('Transfer error:', err));
@@ -105,6 +137,10 @@ const LoginPage = () => {
 
         if (data?.data?.token) {
           localStorage.setItem('token', data.data.token);
+<<<<<<< HEAD
+=======
+          window.dispatchEvent(new Event('customer-auth-changed'));
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
         }
         localStorage.setItem('phone', mobileValue);
 
@@ -127,6 +163,16 @@ const LoginPage = () => {
     <AuthLayout>
       <h3 className="form-title">Welcome!</h3>
       <p className="form-subtitle">Please Log in to continue</p>
+<<<<<<< HEAD
+=======
+      {location.state?.requiresAuth && (
+        <div className="alert alert-warning small" role="alert">
+          {localStorage.getItem('lang') === 'ar'
+            ? 'يجب تسجيل الدخول أولاً للوصول إلى هذه الصفحة.'
+            : 'Please log in first to access this page.'}
+        </div>
+      )}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
       <Form onSubmit={handleRegisteration}>
         <InputGroup className="custom-input-group">

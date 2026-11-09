@@ -72,4 +72,8 @@ const Subscribe = ({ onSubscribe }) => {
   );
 };
 
+<<<<<<< HEAD
 export default Subscribe;
+=======
+export default Subscribe;
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538

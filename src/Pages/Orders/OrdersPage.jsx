@@ -5,6 +5,11 @@ import { FiPackage, FiArrowLeft, FiCalendar, FiClock, FiMapPin, FiCreditCard, Fi
 import MainNavbar from '../../components/MainNavbar';
 import Footer from '../../components/Footer';
 import { useCart } from '../../context/CartContext';
+<<<<<<< HEAD
+=======
+import { useTranslation } from 'react-i18next';
+import { localizedName } from '../../i18n/localizedFields';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 const MAIN_COLOR = '#f13b63';
 
@@ -16,20 +21,34 @@ const statusColor = (status = '') => {
   return { bg: '#e5e7eb', text: '#374151' };
 };
 
+<<<<<<< HEAD
 const formatDate = (dateString) => {
   if (!dateString) return 'N/A';
   const date = new Date(dateString);
   return date.toLocaleDateString('en-GB', {
+=======
+const formatDate = (dateString, language = 'en') => {
+  if (!dateString) return 'N/A';
+  const date = new Date(dateString);
+  return date.toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-GB', {
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
     day: 'numeric',
     month: 'short',
     year: 'numeric',
   });
 };
 
+<<<<<<< HEAD
 const formatTime = (dateString) => {
   if (!dateString) return 'N/A';
   const date = new Date(dateString);
   return date.toLocaleTimeString('en-GB', {
+=======
+const formatTime = (dateString, language = 'en') => {
+  if (!dateString) return 'N/A';
+  const date = new Date(dateString);
+  return date.toLocaleTimeString(language === 'ar' ? 'ar-EG' : 'en-GB', {
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
     hour: '2-digit',
     minute: '2-digit',
   });
@@ -38,6 +57,10 @@ const formatTime = (dateString) => {
 const OrdersPage = () => {
   const navigate = useNavigate();
   const { orders, fetchOrders, markOrdersAsRead } = useCart();
+<<<<<<< HEAD
+=======
+  const { i18n } = useTranslation();
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -102,10 +125,17 @@ const OrdersPage = () => {
                       <h6 className="fw-bold mb-1">Order #{order.id}</h6>
                       <div className="d-flex align-items-center gap-3 small text-muted flex-wrap">
                         <span className="d-flex align-items-center gap-1">
+<<<<<<< HEAD
                           <FiCalendar size={13} /> {formatDate(order.created_at)}
                         </span>
                         <span className="d-flex align-items-center gap-1">
                           <FiClock size={13} /> {formatTime(order.created_at)}
+=======
+                          <FiCalendar size={13} /> {formatDate(order.created_at, i18n.language)}
+                        </span>
+                        <span className="d-flex align-items-center gap-1">
+                          <FiClock size={13} /> {formatTime(order.created_at, i18n.language)}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                         </span>
                       </div>
                     </div>
@@ -129,12 +159,20 @@ const OrdersPage = () => {
                                 <div className="bg-light rounded-2 d-flex align-items-center justify-content-center" style={{ width: '50px', height: '50px' }}>
                                   <img
                                     src={product.image || 'https://via.placeholder.com/50'}
+<<<<<<< HEAD
                                     alt={product.name}
+=======
+                                    alt={localizedName(product, i18n.language, 'Product')}
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                                     style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
                                   />
                                 </div>
                                 <div className="flex-grow-1">
+<<<<<<< HEAD
                                   <div className="fw-medium small">{product.name || 'Product'}</div>
+=======
+                                  <div className="fw-medium small">{localizedName(product, i18n.language, 'Product')}</div>
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
                                   <div className="text-muted small">x{item.quantity || 1}</div>
                                 </div>
                                 <div className="fw-bold small" style={{ color: MAIN_COLOR }}>

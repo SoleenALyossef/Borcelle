@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { BrowserRouter, Routes, Route , Navigate } from 'react-router';
+=======
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -31,6 +35,10 @@ import BrandsList from './Pages/Admin/Brands/BrandsList';
 import CitiesList from './Pages/Admin/Cities/CitiesList';
 import MunicipalsList from './Pages/Admin/Municipals/MunicipalsList';
 import { useAdminAuth } from './context/AdminAuthContext';
+<<<<<<< HEAD
+=======
+import ProtectedRoute from './components/ProtectedRoute';
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
 // 1. حماية الأدمن
 const RequireAdmin = ({ children }) => {
@@ -39,6 +47,7 @@ const RequireAdmin = ({ children }) => {
 };
 
 //  2. حماية المستخدم العادي (Customer)
+<<<<<<< HEAD
 const RequireAuth = ({ children }) => {
   const token = localStorage.getItem('token');
   
@@ -48,6 +57,43 @@ const RequireAuth = ({ children }) => {
     return <Navigate to="/LoginPage" replace />;
   }
   
+=======
+const RequireAuth = ({ children }) => <ProtectedRoute>{children}</ProtectedRoute>;
+
+// A fresh browser with no session should start at the home page, not at a pasted deep link.
+// Actual private data is still protected by RequireAuth and server-side token validation.
+const InitialDeepLinkGuard = ({ children }) => {
+  const location = useLocation();
+  const path = location.pathname;
+  const normalizedPath = path.toLowerCase();
+  const isAuthRoute = ['/loginpage', '/verification', '/admin/login'].includes(normalizedPath);
+  const isAdminRoute = normalizedPath === '/admin' || normalizedPath.startsWith('/admin/');
+  const hasCustomerSession = Boolean(localStorage.getItem('token'));
+  const hasAdminSession = Boolean(localStorage.getItem('adminToken'));
+  const hasRouteSession = isAdminRoute ? hasAdminSession : (hasCustomerSession || hasAdminSession);
+  const entryEstablished = sessionStorage.getItem('borcelle-entry-established') === '1';
+  const isCustomerPrivateRoute = ['/profilepage', '/profileinfopage', '/orders', '/checkoutpage'].includes(normalizedPath);
+
+  useEffect(() => {
+    if (path === '/' || isAuthRoute || hasRouteSession) {
+      sessionStorage.setItem('borcelle-entry-established', '1');
+    }
+  }, [path, isAuthRoute, hasRouteSession]);
+
+  // A pasted deep link in a new tab/session must never restore a private view directly.
+  // The visitor can navigate normally from Home; account APIs still validate the token.
+  if (path !== '/' && !isAuthRoute && !entryEstablished) {
+    const attemptedPath = `${location.pathname}${location.search || ''}${location.hash || ''}`;
+    return (
+      <Navigate
+        to="/"
+        replace
+        state={isCustomerPrivateRoute ? { authRequired: true, attemptedPath } : null}
+      />
+    );
+  }
+
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
   return children;
 };
 
@@ -62,6 +108,10 @@ function App() {
 
   return (
     <BrowserRouter>
+<<<<<<< HEAD
+=======
+      <InitialDeepLinkGuard>
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
       <Routes>
         {/* Auth */}
         <Route path="/LoginPage" element={<LoginPage />} />
@@ -88,7 +138,11 @@ function App() {
           path="/orders" 
           element={<RequireAuth><OrdersPage /></RequireAuth>} 
         />
+<<<<<<< HEAD
        <Route path="/CheckoutPage" element={<CheckoutPage />} />
+=======
+       <Route path="/CheckoutPage" element={<RequireAuth><CheckoutPage /></RequireAuth>} />
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
 
         {/* 404 */}
         <Route path="*" element={<div className="text-center py-5">Page not found</div>} />
@@ -117,6 +171,10 @@ function App() {
           <Route path="municipals" element={<MunicipalsList />} />
         </Route>
       </Routes>
+<<<<<<< HEAD
+=======
+      </InitialDeepLinkGuard>
+>>>>>>> 0d47c315e1710745dd8448458dfcf8f0f21ee538
     </BrowserRouter>
   );
 }
