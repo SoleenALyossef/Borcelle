@@ -10,7 +10,7 @@ import DealsAndOffers from './DealsAndOffers/DealsAndOffers';
 import image1 from '../../assets/image/image 98.png'
 import image from '../../assets/image/image 92.png'
 import HeroSection from './HeroSection/HeroSection';
-import Subscribe from '../../components/Subscribe';
+import Subscribe from "../../components/Subscribe";
 
 const HomePage = () => {
   return (
